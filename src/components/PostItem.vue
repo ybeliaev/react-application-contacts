@@ -2,7 +2,7 @@
   <li>
     <h2>{{post.title}}</h2>
     <p>{{post.text}}</p>
-    <a v-bind:href="post.href">Link</a>
+    <a v-bind:href="post.href" target="_blank">Link</a>
     <button>&#128169;</button>
   </li>
 </template>
