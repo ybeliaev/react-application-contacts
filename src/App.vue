@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img width="25%" src="./assets/logo.png">
-    <PostLists/>
+    <PostLists :postData="postData"/>
   </div>
 </template>
 
@@ -9,6 +9,19 @@
 import PostLists from "@/components/PostLists";
 export default {
   name: "App",
+  data() {
+    return {
+      postData: [
+        { id: 1, title: "About Vue", text: "Vue is a china framework." },
+        { id: 2, title: "Angular", text: "Angular 9 is now." },
+        {
+          id: 3,
+          title: "About Vue",
+          text: "JS is popular programming language."
+        }
+      ]
+    };
+  },
   components: {
     PostLists
   }

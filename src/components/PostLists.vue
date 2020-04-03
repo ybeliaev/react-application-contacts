@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <PostItem/>
+    <PostItem v-for="post in postData" :key="post.id"/>
   </ul>
 </template>
 
@@ -10,6 +10,12 @@ export default {
   name: "PostList",
   components: {
     PostItem
+  },
+  props: {
+    postData: {
+      type: Array,
+      required: true
+    }
   }
 };
 </script>
