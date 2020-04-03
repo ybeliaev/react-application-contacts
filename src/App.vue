@@ -1,13 +1,17 @@
 <template>
   <div id="app">
     <img width="25%" src="./assets/logo.png">
+    <PostLists/>
   </div>
 </template>
 
 <script>
+import PostLists from "@/components/PostLists";
 export default {
   name: "App",
-  components: {}
+  components: {
+    PostLists
+  }
 };
 </script>
 
@@ -19,5 +23,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+ul {
+  list-style: none;
 }
 </style>
