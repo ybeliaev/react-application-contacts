@@ -12,12 +12,23 @@ export default {
   data() {
     return {
       postData: [
-        { id: 1, title: "About Vue", text: "Vue is a china framework." },
-        { id: 2, title: "Angular", text: "Angular 9 is now." },
+        {
+          id: 1,
+          title: "About Vue",
+          text: "Vue is a china framework.",
+          href: "https://ru.vuejs.org/"
+        },
+        {
+          id: 2,
+          title: "Angular",
+          text: "Angular 9 is now.",
+          href: "https://angular.io/"
+        },
         {
           id: 3,
-          title: "About Vue",
-          text: "JS is popular programming language."
+          title: "Java Script",
+          text: "JS is popular programming language.",
+          href: "https://javascript.info/"
         }
       ]
     };

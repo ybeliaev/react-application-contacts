@@ -1,14 +1,15 @@
 <template>
   <li>
-    <h2>Some title</h2>
-    <p>text text text</p>
-    <a href="#">Link</a>
+    <h2>{{post.title}}</h2>
+    <p>{{post.text}}</p>
+    <a v-bind:href="post.href">Link</a>
     <button>&#128169;</button>
   </li>
 </template>
 <script>
 export default {
-  name: "PostItem"
+  name: "PostItem",
+  props: ["post"]
 };
 </script>
 
