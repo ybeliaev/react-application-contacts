@@ -1,6 +1,11 @@
 <template>
   <ul>
-    <PostItem v-for="post in postData" :key="post.id" v-bind:post="post"/>
+    <PostItem
+      v-for="post in postData"
+      :key="post.id"
+      v-bind:post="post"
+      v-on:remove-block="removePost"
+    />
   </ul>
 </template>
 
@@ -16,6 +21,11 @@ export default {
   },
   components: {
     PostItem
+  },
+  methods: {
+    removePost(id) {
+      console.log(id);
+    }
   }
 };
 </script>

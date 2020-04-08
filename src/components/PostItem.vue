@@ -4,7 +4,7 @@
     <p>{{post.text}}</p>
     <a v-bind:href="post.href" :class="{done: post.visited}" target="_blank">Link</a>
     <input v-on:change="post.visited=!post.visited" type="checkbox">
-    <button>&#128169;</button>
+    <button v-on:click="$emit('remove-block', post.id)">&#128169;</button>
   </li>
 </template>
 <script>
