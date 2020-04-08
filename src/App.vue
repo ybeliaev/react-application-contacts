@@ -16,19 +16,22 @@ export default {
           id: 1,
           title: "About Vue",
           text: "Vue is a china framework.",
-          href: "https://ru.vuejs.org/"
+          href: "https://ru.vuejs.org/",
+          visited: false
         },
         {
           id: 2,
           title: "Angular",
           text: "Angular 9 is now.",
-          href: "https://angular.io/"
+          href: "https://angular.io/",
+          visited: false
         },
         {
           id: 3,
           title: "Java Script",
           text: "JS is popular programming language.",
-          href: "https://javascript.info/"
+          href: "https://javascript.info/",
+          visited: false
         }
       ]
     };
