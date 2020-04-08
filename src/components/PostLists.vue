@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     removePost(id) {
-      console.log(id);
+      this.$emit("remove-somepost", id);
     }
   }
 };

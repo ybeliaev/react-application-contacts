@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img width="25%" src="./assets/logo.png">
-    <PostLists :postData="postData"/>
+    <PostLists :postData="postData" @remove-somepost="removePost"/>
   </div>
 </template>
 
@@ -35,6 +35,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    removePost(id) {
+      this.postData = this.postData.filter(item => item.id !== id);
+    }
   },
   components: {
     PostLists
