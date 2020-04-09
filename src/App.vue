@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img width="25%" src="./assets/logo.png">
-    <AddPost/>
+    <AddPost @add-post="addPost"/>
     <PostLists :postData="postData" @remove-somepost="removePost"/>
   </div>
 </template>
