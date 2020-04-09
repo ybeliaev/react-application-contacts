@@ -18,14 +18,14 @@ export default {
   methods: {
     onSubmit() {
       if (this.title.trim()) {
-        const newTodo = {
+        const newPost = {
           id: Date.now(),
           title: this.title,
           text: this.postText,
           visited: false
         };
 
-        this.$emit("add-post", newTodo);
+        this.$emit("add-post", newPost);
         this.title = "";
       }
     }
