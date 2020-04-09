@@ -1,6 +1,7 @@
 <template>
   <li>
     <h2 :class="{done:post.visited}">{{post.title}}</h2>
+    <span>Post {{index + 1}}</span>
     <p>{{post.text}}</p>
     <a v-bind:href="post.href" target="_blank">Link</a>
     <input v-on:change="post.visited=!post.visited" type="checkbox">
@@ -10,7 +11,7 @@
 <script>
 export default {
   name: "PostItem",
-  props: ["post"]
+  props: ["post", "index"]
 };
 </script>
 

@@ -1,9 +1,10 @@
 <template>
   <ul>
     <PostItem
-      v-for="post in postData"
+      v-for="(post, i) in postData"
       :key="post.id"
       v-bind:post="post"
+      v-bind:index="i"
       v-on:remove-block="removePost"
     />
   </ul>

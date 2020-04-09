@@ -22,11 +22,13 @@ export default {
           id: Date.now(),
           title: this.title,
           text: this.postText,
+          href: "#",
           visited: false
         };
 
         this.$emit("add-post", newPost);
         this.title = "";
+        this.postText = "";
       }
     }
   }

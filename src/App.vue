@@ -42,6 +42,9 @@ export default {
     removePost(id) {
       // console.log(this.postData);
       this.postData = this.postData.filter(item => item.id !== id);
+    },
+    addPost(post) {
+      this.postData.push(post);
     }
   },
   components: {
