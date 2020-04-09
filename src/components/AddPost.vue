@@ -17,16 +17,17 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (this.title.trim() && this.postText.trim()) {
-        const newPost = {
+      if (this.title.trim()) {
+        const newTodo = {
           id: Date.now(),
           title: this.title,
           text: this.postText,
           visited: false
-        }
-        this.@emit('add-post', newPost);
-      } // end if
-      
+        };
+
+        this.$emit("add-post", newTodo);
+        this.title = "";
+      }
     }
   }
 };
