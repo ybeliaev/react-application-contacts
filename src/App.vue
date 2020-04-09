@@ -1,12 +1,14 @@
 <template>
   <div id="app">
     <img width="25%" src="./assets/logo.png">
+    <AddPost/>
     <PostLists :postData="postData" @remove-somepost="removePost"/>
   </div>
 </template>
 
 <script>
 import PostLists from "@/components/PostLists";
+import AddPost from "@/components/AddPost";
 export default {
   name: "App",
   data() {
@@ -38,16 +40,21 @@ export default {
   },
   methods: {
     removePost(id) {
+      // console.log(this.postData);
       this.postData = this.postData.filter(item => item.id !== id);
     }
   },
   components: {
-    PostLists
+    PostLists,
+    AddPost
   }
 };
 </script>
 
 <style>
+* {
+  box-sizing: border-box;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
