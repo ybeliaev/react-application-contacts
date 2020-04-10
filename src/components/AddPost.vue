@@ -21,7 +21,7 @@ export default {
         const newPost = {
           id: Date.now(),
           title: this.title,
-          text: this.postText,
+          body: this.postText,
           href: "#",
           visited: false
         };

@@ -17,7 +17,7 @@ export default {
         {
           id: 1,
           title: "About Vue",
-          text: "Vue is a china framework.",
+          body: "Vue is a china framework.",
           href: "https://ru.vuejs.org/",
           visited: false
         },
@@ -38,6 +38,13 @@ export default {
       ]
     };
   },
+  // mounted() {
+  //   fetch("https://jsonplaceholder.typicode.com/posts?_limit=5")
+  //     .then(response => response.json())
+  //     .then(json => {
+  //       this.postData = json;
+  //     });
+  // },
   methods: {
     removePost(id) {
       // console.log(this.postData);
