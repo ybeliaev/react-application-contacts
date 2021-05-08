@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 
+import Container from "@material-ui/core/Container";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+
 const useContacts = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // otherwise the name will be undefined
@@ -38,5 +42,13 @@ export function Contacts() {
   if (contacts.isError) {
     return <div>Error!</div>;
   }
-  return <div>Contacts: {contacts.data[0].name.first}</div>;
+  return (
+    <Container>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <div>Contacts: {contacts.data[0].name.first}</div>
+        </Grid>
+      </Grid>
+    </Container>
+  );
 }
