@@ -4,15 +4,24 @@ export function Contacts() {
   const [contacts, setContacts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
   const URL = "https://randomuser.me/api/?results=200";
+
   useEffect(() => {
     setIsLoading(true);
-    fetch(URL)
-      .then((response) => response.json())
-      .then((data) => {
-        setContacts(data);
+    const getContacts = async (url) => {
+      try {
+        const response = await fetch(url);
+        const { results } = await response.json();
+        setContacts(results);
         setIsLoading(false);
-      });
+        setIsError(false);
+      } catch (e) {
+        setIsLoading(false);
+        setIsError(true);
+      }
+    };
+    getContacts(URL);
   }, []);
 
   if (isLoading) {
@@ -21,5 +30,5 @@ export function Contacts() {
   if (isError) {
     return <div>Error!</div>;
   }
-  return <div>Contacts</div>;
+  return <div>Contacts: {contacts[0].name.first}</div>;
 }
