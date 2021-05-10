@@ -1,40 +1,20 @@
 import React, { useState, useEffect } from "react";
 
+import { useContacts } from "./useContacts";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
-const useContacts = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // otherwise the name will be undefined
-  const [isError, setIsError] = useState(false);
-
-  const URL = "https://randomuser.me/api/?results=200";
-
-  useEffect(() => {
-    const getContacts = async (url) => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(url);
-        const { results, error } = await response.json();
-        if (error) {
-          throw new Error(error);
-        }
-        setData(results);
-        setIsError(false);
-      } catch (e) {
-        setIsError(true);
-        console.error(e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getContacts(URL);
-  }, []);
-  return { data, isLoading, isError };
-};
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      marginTop: theme.spacing(3),
+    },
+  })
+);
 
 export function Contacts() {
+  const classes = useStyles();
   const contacts = useContacts();
   if (contacts.isLoading) {
     return <div>Loading..</div>;
@@ -43,7 +23,7 @@ export function Contacts() {
     return <div>Error!</div>;
   }
   return (
-    <Container>
+    <Container className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <div>Contacts: {contacts.data[0].name.first}</div>
