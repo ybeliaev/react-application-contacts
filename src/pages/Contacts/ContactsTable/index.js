@@ -12,11 +12,15 @@ import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { CopyToClipboardText } from "../../../components/CopyToClipboardText";
+import { NATIONALITIES } from "../../../constants/nationality";
 
 //   return <div>{data[0].name.first}</div>;
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+  },
+  bold: {
+    fontWeight: 600,
   },
 });
 
@@ -62,8 +66,17 @@ export function ContactsTable({ data }) {
               <TableCell align="left">
                 <CopyToClipboardText text={contact.phone} />
               </TableCell>
-              <TableCell align="left">{contact.location.city}</TableCell>
-              <TableCell align="right">{contact.nat}</TableCell>
+              <TableCell align="left">
+                <Typography className={classes.bold}>
+                  {contact.location.country}
+                </Typography>
+                <Typography>{contact.location.city}</Typography>
+                <Typography>
+                  {contact.location.street.name}&nbsp;
+                  {contact.location.street.number}
+                </Typography>
+              </TableCell>
+              <TableCell align="right">{NATIONALITIES[contact.nat]}</TableCell>
             </TableRow>
           ))}
         </TableBody>
