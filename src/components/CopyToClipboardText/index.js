@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 
 // components from Material ui
 import Box from "@material-ui/core/Box";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Zoom from "@material-ui/core/Zoom";
 
 // hook from react-use
 import { useCopyToClipboard } from "react-use";
@@ -22,26 +24,52 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
+// CONSTANTS
+const STATUS_COPY = {
+  COPY: "copy",
+  COPIED: "copied",
+};
+const TITLE_BY_STATUS = {
+  [STATUS_COPY.COPY]: "copy",
+  [STATUS_COPY.COPIED]: "copied",
+};
 
 export const CopyToClipboardText = ({ text }) => {
   // states
-  const [state, copyToClipboard] = useCopyToClipboard();
-  const [statusCopy, setStatusCopy] = useState("copy");
+  const [, copyToClipboard] = useCopyToClipboard(); // here state isn't use
+  const [statusCopy, setStatusCopy] = useState(STATUS_COPY);
   // styles
   const classes = useStyles();
+  // handle functions
+
+  const handleClickCopy = useCallback(() => {
+    copyToClipboard(text);
+    setStatusCopy(STATUS_COPY.COPIED);
+  }, [copyToClipboard, text]);
+  const handleClickAway = useCallback(() => {
+    setStatusCopy(STATUS_COPY.COPY);
+  }, []);
 
   return (
-    <Tooltip title="Copy" aria-label="copy" placement="top" arrow>
-      <Box
-        display="flex"
-        alignItems="center"
-        className={classes.root}
-        onClick={() => copyToClipboard(text)}
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <Tooltip
+        title={TITLE_BY_STATUS[statusCopy]}
+        aria-label="copy"
+        placement="top"
+        arrow
+        TransitionComponent={Zoom}
       >
-        <FileCopyOutlinedIcon fontSize="small" className={classes.icon} />
-        {text}
-      </Box>
-    </Tooltip>
+        <Box
+          display="flex"
+          alignItems="center"
+          className={classes.root}
+          onClick={handleClickCopy}
+        >
+          <FileCopyOutlinedIcon fontSize="small" className={classes.icon} />
+          {text}
+        </Box>
+      </Tooltip>
+    </ClickAwayListener>
   );
 };
 CopyToClipboardText.propTypes = {
