@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useContacts } from "./hooks/useContacts";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -16,7 +17,11 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-
+// CONSTANTS
+const DATA_VIEW_MODE = {
+  TABLE: "table",
+  GRID: "grid",
+};
 function Loading() {
   return <div>Loading..</div>;
 }
@@ -24,6 +29,7 @@ function Loading() {
 export function Contacts() {
   const classes = useStyles();
   const contacts = useContacts();
+  const [dataViewMode, setDataViewMode] = useState(DATA_VIEW_MODE.TABLE);
 
   if (contacts.isError) {
     return <div>Error!</div>;

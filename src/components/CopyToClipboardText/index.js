@@ -37,18 +37,18 @@ const TITLE_BY_STATUS = {
 export const CopyToClipboardText = ({ text }) => {
   // states
   const [, copyToClipboard] = useCopyToClipboard(); // here state isn't use
-  const [statusCopy, setStatusCopy] = useState(STATUS_COPY);
+  const [statusCopy, setStatusCopy] = useState(STATUS_COPY.COPY);
+
   // styles
   const classes = useStyles();
   // handle functions
-
   const handleClickCopy = useCallback(() => {
     copyToClipboard(text);
     setStatusCopy(STATUS_COPY.COPIED);
   }, [copyToClipboard, text]);
   const handleClickAway = useCallback(() => {
     setStatusCopy(STATUS_COPY.COPY);
-  }, []);
+  }, [setStatusCopy]);
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>

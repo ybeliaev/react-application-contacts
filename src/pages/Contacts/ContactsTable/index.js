@@ -14,7 +14,6 @@ import Typography from "@material-ui/core/Typography";
 import { CopyToClipboardText } from "../../../components/CopyToClipboardText";
 import { NATIONALITIES } from "../../../constants/nationality";
 
-//   return <div>{data[0].name.first}</div>;
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -34,7 +33,7 @@ export function ContactsTable({ data }) {
           <TableRow>
             <TableCell>Avatar</TableCell>
             <TableCell align="left">Full Name</TableCell>
-            <TableCell align="left">Birsday</TableCell>
+            <TableCell align="left">Birthday</TableCell>
             <TableCell align="left">Email</TableCell>
             <TableCell align="left">Phone</TableCell>
             <TableCell align="left">Location</TableCell>
