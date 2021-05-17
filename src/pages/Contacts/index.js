@@ -1,19 +1,16 @@
-import { useState } from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { DATA_VIEW_MODE } from "../../constants/constants";
+import { useContacts } from "./hooks/useContacts";
+import { useDataViewMode } from "./hooks/useDataViewMode";
+
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import ViewListIcon from "@material-ui/icons/ViewList";
-import ViewModuleIcon from "@material-ui/icons/ViewModule";
-import ViewQuiltIcon from "@material-ui/icons/ViewQuilt";
-import ToggleButton from "@material-ui/lab/ToggleButton";
-import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-
 import { ContactsTable } from "./ContactsTable";
-import { useContacts } from "./hooks/useContacts";
+import { ToggleDataViewMode } from "./ToggleDataViewMode";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -25,49 +22,26 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-// CONSTANTS
-const DATA_VIEW_MODE = {
-  TABLE: "table",
-  GRID: "grid",
-};
 
 export function Contacts() {
   // STATES
   const contacts = useContacts();
-  const [dataViewMode, setDataViewMode] = useState(DATA_VIEW_MODE.TABLE);
+  const [dataViewMode, setDataViewMode] = useDataViewMode();
   // CSS
   const classes = useStyles();
 
-  const handleChangeViewMode = (event, nextView) => {
-    setDataViewMode(nextView);
-  };
   return (
     <Container className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12} className={classes.headContainer}>
           <Box display="flex" justifyContent="space-between">
-            <Typography variant="h3" component="h1">
+            <Typography variant="h4" component="h1">
               Contacts:
             </Typography>
-            <ToggleButtonGroup
-              orientation="vertical"
-              value={dataViewMode}
-              exclusive
-              onChange={handleChangeViewMode}
-            >
-              <ToggleButton
-                value={DATA_VIEW_MODE.GRID}
-                aria-label={DATA_VIEW_MODE.GRID}
-              >
-                <ViewListIcon />
-              </ToggleButton>
-              <ToggleButton
-                value={DATA_VIEW_MODE.TABLE}
-                aria-label={DATA_VIEW_MODE.TABLE}
-              >
-                <ViewModuleIcon />
-              </ToggleButton>
-            </ToggleButtonGroup>
+            <ToggleDataViewMode
+              dataViewMode={dataViewMode}
+              setDataViewMode={setDataViewMode}
+            />
           </Box>
         </Grid>
         <Grid item xs={12}>

@@ -17,3 +17,8 @@ export const NATIONALITIES = {
   TR: "Turkish",
   US: "United State",
 };
+
+export const DATA_VIEW_MODE = {
+  TABLE: "table",
+  GRID: "grid",
+};

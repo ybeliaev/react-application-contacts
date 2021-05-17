@@ -12,7 +12,7 @@ import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { CopyToClipboardText } from "../../../components/CopyToClipboardText";
-import { NATIONALITIES } from "../../../constants/nationality";
+import { NATIONALITIES } from "../../../constants/constants";
 
 const useStyles = makeStyles({
   table: {
