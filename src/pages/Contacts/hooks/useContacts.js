@@ -5,7 +5,7 @@ export const useContacts = () => {
   const [isLoading, setIsLoading] = useState(true); // otherwise the name will be undefined
   const [isError, setIsError] = useState(false);
 
-  const URL = "https://randomuser.me/api/?results=200";
+  const URL = "https://randomuser.me/api/?results=20";
 
   useEffect(() => {
     const getContacts = async (url) => {
