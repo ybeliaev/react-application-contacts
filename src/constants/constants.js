@@ -23,7 +23,7 @@ export const DATA_VIEW_MODE = {
   GRID: "grid",
 };
 
-export const users = [
+export const USERS = [
   {
     gender: "male",
     name: {
