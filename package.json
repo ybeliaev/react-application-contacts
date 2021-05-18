@@ -53,5 +53,8 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "devDependencies": {
+    "msw": "^0.28.2"
   }
 }
