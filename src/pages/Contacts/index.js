@@ -48,7 +48,8 @@ export function Contacts() {
           {(() => {
             if (contacts.isLoading)
               return <CircularProgress data-testid="contacts-loader" />;
-            if (contacts.isError) return <div>Error!</div>;
+            if (contacts.isError)
+              return <div data-testid="contacts-error">Error!</div>;
             if (dataViewMode === DATA_VIEW_MODE.TABLE)
               return <ContactsTable data={contacts.data} />;
             if (dataViewMode === DATA_VIEW_MODE.GRID) return <div>"GRID"</div>;

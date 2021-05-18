@@ -4,21 +4,11 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
-// src/mocks/handlers.js
 import { rest } from "msw";
-// src/mocks/server.js
-import { setupServer } from "msw/node";
 
 import { Contacts } from "../pages/Contacts";
-import { USERS } from "../constants/constants";
+import { server } from "../serverTests";
 
-const handlers = [
-  rest.get("https://randomuser.me/api/?results=20", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ results: USERS }));
-  }),
-];
-
-const server = setupServer(...handlers);
 beforeAll(() => server.listen());
 
 afterEach(() => server.resetHandlers());
@@ -45,4 +35,20 @@ test(`success`, async () => {
 
   expect(loader).not.toBeInTheDocument();
   expect(screen.getByTestId("contacts-table-container")).toBeInTheDocument();
+});
+
+test(`fail`, async () => {
+  server.use(
+    rest.get("https://randomuser.me/api/?results=20", (req, res, ctx) => {
+      return res(ctx.status(500), ctx.json({ error: "Internal server error" }));
+    })
+  );
+  render(<Contacts />);
+
+  const loader = screen.getByTestId("contacts-loader");
+
+  await waitForElementToBeRemoved(loader);
+
+  expect(loader).not.toBeInTheDocument();
+  expect(screen.getByTestId("contacts-error")).toBeInTheDocument();
 });
