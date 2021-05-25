@@ -4,6 +4,8 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
 import { rest } from "msw";
 
 import { Contacts } from "../pages/Contacts";
