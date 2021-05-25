@@ -52,7 +52,8 @@ export function Contacts() {
               return <div data-testid="contacts-error">Error!</div>;
             if (dataViewMode === DATA_VIEW_MODE.TABLE)
               return <ContactsTable data={contacts.data} />;
-            if (dataViewMode === DATA_VIEW_MODE.GRID) return <div>"GRID"</div>;
+            if (dataViewMode === DATA_VIEW_MODE.GRID)
+              return <div data-testid="contacts-grid-container">"GRID"</div>;
             return null;
           })()}
         </Grid>
