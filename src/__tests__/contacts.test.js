@@ -61,14 +61,17 @@ describe(`contacts data view mode`, () => {
     const loader = screen.getByTestId("contacts-loader");
     await waitForElementToBeRemoved(loader);
 
-    expect(screen.getByTestId("contacts-table-container")).toBeInTheDocument();
-    expect(screen.getByTestId("toggle-data-viewmode-table")).toHaveClass(
+    const toggleTGrid = screen.queryByTestId("toggle-data-viewmode-table");
+    userEvent.click(toggleTGrid);
+
+    expect(screen.getByTestId("contacts-grid-container")).toBeInTheDocument();
+    expect(screen.getByTestId("toggle-data-viewmode-grid")).toHaveClass(
       "Mui-selected"
     );
     expect(
-      screen.queryByTestId("contacts-grid-container") // queryByTestId т.к элемента может не быть
+      screen.queryByTestId("contacts-table-container") // queryByTestId т.к элемента может не быть
     ).not.toBeInTheDocument();
-    expect(screen.getByTestId("toggle-data-viewmode-grid")).not.toHaveClass(
+    expect(screen.getByTestId("toggle-data-viewmode-table")).not.toHaveClass(
       "Mui-selected"
     );
   });

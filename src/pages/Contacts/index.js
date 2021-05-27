@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { DATA_VIEW_MODE } from "../../constants/constants";
 import { useContacts } from "./hooks/useContacts";
@@ -8,6 +10,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import TextField from "@material-ui/core/TextField";
 
 import { ContactsTable } from "./ContactsTable";
 import { ToggleDataViewMode } from "./ToggleDataViewMode";
@@ -20,15 +23,30 @@ const useStyles = makeStyles((theme) =>
     headContainer: {
       marginBottom: theme.spacing(3),
     },
+    filtersContainer: {
+      marginBottom: theme.spacing(3),
+    },
   })
 );
+
+const filterDefaultValue = {
+  fullname: "",
+};
 
 export function Contacts() {
   // STATES
   const contacts = useContacts();
   const [dataViewMode, setDataViewMode] = useDataViewMode();
+  const [filters, setFilters] = useState(filterDefaultValue);
   // CSS
   const classes = useStyles();
+
+  const handleChangeFilter = (e) => {
+    setFilters((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   return (
     <Container className={classes.root}>
@@ -41,6 +59,18 @@ export function Contacts() {
             <ToggleDataViewMode
               dataViewMode={dataViewMode}
               setDataViewMode={setDataViewMode}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={12} className={classes.filtersContainer}>
+          <Box display="flex">
+            <TextField
+              value={filters.fullname}
+              name="fullname"
+              label="Fullname"
+              variant="outlined"
+              size="small"
+              onChange={handleChangeFilter}
             />
           </Box>
         </Grid>
