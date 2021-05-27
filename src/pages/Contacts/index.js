@@ -40,9 +40,15 @@ const filterDefaultValue = {
   fullname: "",
   gender: "all",
 };
+// clear functions
 const filterByFullName = ({ first, last }, fullname) =>
   first?.toLowerCase().includes(fullname.toLowerCase()) ||
   last?.toLowerCase().includes(fullname.toLowerCase());
+
+const filterByGender = (gender, filterGender) => {
+  if (filterGender === "all") return true;
+  return gender === filterGender;
+};
 
 export function Contacts() {
   // STATES
@@ -62,11 +68,7 @@ export function Contacts() {
   // if filters.fullname="" - includes return TRUE
   const filteredContacts = contacts.data
     .filter((c) => filterByFullName(c.name, filters.fullname))
-    .filter((c) => {
-      console.log(filters.gender === c.gender);
-      if (filters.gender === "all") return true;
-      return filters.gender === c.gender;
-    });
+    .filter((c) => filterByGender(c.gender, filters.gender));
 
   return (
     <Container className={classes.root}>
