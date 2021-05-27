@@ -11,6 +11,10 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 import { ContactsTable } from "./ContactsTable";
 import { ToggleDataViewMode } from "./ToggleDataViewMode";
@@ -26,11 +30,15 @@ const useStyles = makeStyles((theme) =>
     filtersContainer: {
       marginBottom: theme.spacing(3),
     },
+    fieldGender: {
+      minWidth: 100,
+    },
   })
 );
 
 const filterDefaultValue = {
   fullname: "",
+  gender: "all",
 };
 const filterByFullName = ({ first, last }, fullname) =>
   first?.toLowerCase().includes(fullname.toLowerCase()) ||
@@ -52,10 +60,13 @@ export function Contacts() {
     }));
   };
   // if filters.fullname="" - includes return TRUE
-  const filteredContacts = contacts.data.filter((c) =>
-    filterByFullName(c.name, filters.fullname)
-  );
-  console.log(filteredContacts);
+  const filteredContacts = contacts.data
+    .filter((c) => filterByFullName(c.name, filters.fullname))
+    .filter((c) => {
+      console.log(filters.gender === c.gender);
+      if (filters.gender === "all") return true;
+      return filters.gender === c.gender;
+    });
 
   return (
     <Container className={classes.root}>
@@ -81,6 +92,20 @@ export function Contacts() {
               size="small"
               onChange={handleChangeFilter}
             />
+            <FormControl variant="outlined" className={classes.fieldGender}>
+              <InputLabel id="gender">Gender</InputLabel>
+              <Select
+                name="gender"
+                labelId="gender"
+                value={filters.gender}
+                onChange={handleChangeFilter}
+                label="Gender"
+              >
+                <MenuItem value="all">All</MenuItem>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
         </Grid>
         <Grid item xs={12}>
