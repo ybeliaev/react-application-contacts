@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) =>
 const filterDefaultValue = {
   fullname: "",
 };
+const filterByFullName = ({ first, last }, fullname) =>
+  first?.toLowerCase().includes(fullname.toLowerCase()) ||
+  last?.toLowerCase().includes(fullname.toLowerCase());
 
 export function Contacts() {
   // STATES
@@ -41,12 +44,18 @@ export function Contacts() {
   // CSS
   const classes = useStyles();
 
+  // handlers
   const handleChangeFilter = (e) => {
     setFilters((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
+  // if filters.fullname="" - includes return TRUE
+  const filteredContacts = contacts.data.filter((c) =>
+    filterByFullName(c.name, filters.fullname)
+  );
+  console.log(filteredContacts);
 
   return (
     <Container className={classes.root}>
@@ -81,7 +90,7 @@ export function Contacts() {
             if (contacts.isError)
               return <div data-testid="contacts-error">Error!</div>;
             if (dataViewMode === DATA_VIEW_MODE.TABLE)
-              return <ContactsTable data={contacts.data} />;
+              return <ContactsTable data={filteredContacts} />;
             if (dataViewMode === DATA_VIEW_MODE.GRID)
               return <div data-testid="contacts-grid-container">"GRID"</div>;
             return null;
