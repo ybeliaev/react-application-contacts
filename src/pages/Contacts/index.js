@@ -10,14 +10,10 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import TextField from "@material-ui/core/TextField";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 
 import { ContactsTable } from "./ContactsTable";
 import { ToggleDataViewMode } from "./ToggleDataViewMode";
+import ContactsFilters from "../ContactsFilters";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -45,9 +41,9 @@ const filterByFullName = ({ first, last }, fullname) =>
   first?.toLowerCase().includes(fullname.toLowerCase()) ||
   last?.toLowerCase().includes(fullname.toLowerCase());
 
-const filterByGender = (gender, filterGender) => {
-  if (filterGender === "all") return true;
-  return gender === filterGender;
+const filterByGender = (value, gender) => {
+  if (gender === "all") return true;
+  return gender === value;
 };
 
 export function Contacts() {
@@ -85,30 +81,10 @@ export function Contacts() {
           </Box>
         </Grid>
         <Grid item xs={12} className={classes.filtersContainer}>
-          <Box display="flex">
-            <TextField
-              value={filters.fullname}
-              name="fullname"
-              label="Fullname"
-              variant="outlined"
-              size="small"
-              onChange={handleChangeFilter}
-            />
-            <FormControl variant="outlined" className={classes.fieldGender}>
-              <InputLabel id="gender">Gender</InputLabel>
-              <Select
-                name="gender"
-                labelId="gender"
-                value={filters.gender}
-                onChange={handleChangeFilter}
-                label="Gender"
-              >
-                <MenuItem value="all">All</MenuItem>
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+          <ContactsFilters
+            filters={filters}
+            handleChangeFilter={handleChangeFilter}
+          />
         </Grid>
         <Grid item xs={12}>
           {(() => {
