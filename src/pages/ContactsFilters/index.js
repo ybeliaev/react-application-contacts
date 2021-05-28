@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) =>
       minWidth: 100,
     },
     fieldNationality: {
-      minWidth: 100,
+      minWidth: 140,
     },
   })
 );
