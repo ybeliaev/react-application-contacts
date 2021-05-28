@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
@@ -8,10 +9,14 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
 import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { NATIONALITIES } from "../../constants/constants";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     fieldGender: {
+      minWidth: 100,
+    },
+    fieldNationality: {
       minWidth: 100,
     },
   })
@@ -53,6 +58,32 @@ export default function ContactsFilters({ filters, updateFilter }) {
           <MenuItem value="female">Female</MenuItem>
         </Select>
       </FormControl>
+      <FormControl
+        variant="outlined"
+        className={classes.fieldNationality}
+        size="small"
+      >
+        <InputLabel id="nationality">Nationality</InputLabel>
+        <Select
+          name="nationality"
+          labelId="gender"
+          value={filters.nationality}
+          onChange={handleChangeFilter}
+          label="Nationality"
+        >
+          <MenuItem value="all">All</MenuItem>
+          {Object.entries(NATIONALITIES).map(([key, name]) => (
+            <MenuItem value={key} key={key}>
+              {name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </Box>
   );
 }
+
+ContactsFilters.propTypes = {
+  filters: PropTypes.object.isRequired,
+  updateFilter: PropTypes.func.isRequired,
+};

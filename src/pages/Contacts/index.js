@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) =>
 const filterDefaultValue = {
   fullname: "",
   gender: "all",
+  nationality: "all",
 };
 // clear functions
 const filterByFullName = ({ first, last }, fullname) =>
