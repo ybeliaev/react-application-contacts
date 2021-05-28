@@ -7,12 +7,19 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import Button from "@material-ui/core/Button";
+import ClearIcon from "@material-ui/icons/Clear";
 
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { NATIONALITIES } from "../../constants/constants";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
+    fieldsContainer: {
+      "& > *:not(:last-child)": {
+        marginRight: theme.spacing(2),
+      },
+    },
     fieldGender: {
       minWidth: 100,
     },
@@ -22,7 +29,11 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function ContactsFilters({ filters, updateFilter }) {
+export default function ContactsFilters({
+  filters,
+  updateFilter,
+  clearFilters,
+}) {
   const classes = useStyles();
 
   // handlers
@@ -31,54 +42,64 @@ export default function ContactsFilters({ filters, updateFilter }) {
   };
 
   return (
-    <Box display="flex">
-      <TextField
-        value={filters.fullname}
-        name="fullname"
-        label="Fullname"
-        variant="outlined"
-        onChange={handleChangeFilter}
-        size="small"
-      />
-      <FormControl
-        variant="outlined"
-        className={classes.fieldGender}
-        size="small"
-      >
-        <InputLabel id="gender">Gender</InputLabel>
-        <Select
-          name="gender"
-          labelId="gender"
-          value={filters.gender}
+    <Box display="flex" justifyContent="space-between">
+      <Box display="flex" className={classes.fieldsContainer}>
+        <TextField
+          value={filters.fullname}
+          name="fullname"
+          label="Fullname"
+          variant="outlined"
           onChange={handleChangeFilter}
-          label="Gender"
+          size="small"
+        />
+        <FormControl
+          variant="outlined"
+          className={classes.fieldGender}
+          size="small"
         >
-          <MenuItem value="all">All</MenuItem>
-          <MenuItem value="male">Male</MenuItem>
-          <MenuItem value="female">Female</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl
+          <InputLabel id="gender">Gender</InputLabel>
+          <Select
+            name="gender"
+            labelId="gender"
+            value={filters.gender}
+            onChange={handleChangeFilter}
+            label="Gender"
+          >
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="male">Male</MenuItem>
+            <MenuItem value="female">Female</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl
+          variant="outlined"
+          className={classes.fieldNationality}
+          size="small"
+        >
+          <InputLabel id="nationality">Nationality</InputLabel>
+          <Select
+            name="nationality"
+            labelId="gender"
+            value={filters.nationality}
+            onChange={handleChangeFilter}
+            label="Nationality"
+          >
+            <MenuItem value="all">All</MenuItem>
+            {Object.entries(NATIONALITIES).map(([key, name]) => (
+              <MenuItem value={key} key={key}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+      <Button
         variant="outlined"
-        className={classes.fieldNationality}
+        startIcon={<ClearIcon />}
         size="small"
+        onClick={clearFilters}
       >
-        <InputLabel id="nationality">Nationality</InputLabel>
-        <Select
-          name="nationality"
-          labelId="gender"
-          value={filters.nationality}
-          onChange={handleChangeFilter}
-          label="Nationality"
-        >
-          <MenuItem value="all">All</MenuItem>
-          {Object.entries(NATIONALITIES).map(([key, name]) => (
-            <MenuItem value={key} key={key}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+        Clear
+      </Button>
     </Box>
   );
 }
@@ -86,4 +107,5 @@ export default function ContactsFilters({ filters, updateFilter }) {
 ContactsFilters.propTypes = {
   filters: PropTypes.object.isRequired,
   updateFilter: PropTypes.func.isRequired,
+  clearFilters: PropTypes.func.isRequired,
 };

@@ -73,6 +73,10 @@ export function Contacts() {
     .filter((c) => filterByGender(c.gender, filters.gender))
     .filter((c) => filterByNationality(c.nat, filters.nationality));
 
+  const clearFilters = () => {
+    setFilters(filterDefaultValue);
+  };
+
   return (
     <Container className={classes.root}>
       <Grid container spacing={3}>
@@ -88,7 +92,11 @@ export function Contacts() {
           </Box>
         </Grid>
         <Grid item xs={12} className={classes.filtersContainer}>
-          <ContactsFilters filters={filters} updateFilter={updateFilter} />
+          <ContactsFilters
+            filters={filters}
+            updateFilter={updateFilter}
+            clearFilters={clearFilters}
+          />
         </Grid>
         <Grid item xs={12}>
           {(() => {
