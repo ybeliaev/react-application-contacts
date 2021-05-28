@@ -17,8 +17,14 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function ContactsFilters({ filters, handleChangeFilter }) {
+export default function ContactsFilters({ filters, updateFilter }) {
   const classes = useStyles();
+
+  // handlers
+  const handleChangeFilter = (e) => {
+    updateFilter(e.target.name, e.target.value);
+  };
+
   return (
     <Box display="flex">
       <TextField

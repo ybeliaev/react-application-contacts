@@ -55,10 +55,10 @@ export function Contacts() {
   const classes = useStyles();
 
   // handlers
-  const handleChangeFilter = (e) => {
+  const updateFilter = (name, value) => {
     setFilters((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
   // if filters.fullname="" - includes return TRUE
@@ -81,10 +81,7 @@ export function Contacts() {
           </Box>
         </Grid>
         <Grid item xs={12} className={classes.filtersContainer}>
-          <ContactsFilters
-            filters={filters}
-            handleChangeFilter={handleChangeFilter}
-          />
+          <ContactsFilters filters={filters} updateFilter={updateFilter} />
         </Grid>
         <Grid item xs={12}>
           {(() => {
