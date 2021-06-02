@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
 import PropTypes from "prop-types";
 
 import Box from "@material-ui/core/Box";
@@ -13,6 +13,84 @@ import ClearIcon from "@material-ui/icons/Clear";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { NATIONALITIES } from "../../constants/constants";
 
+//STYLES
+const useFieldGenderStyles = makeStyles(() =>
+  createStyles({
+    fieldGender: {
+      minWidth: 100,
+    },
+  })
+);
+const useFieldNationalityStyles = makeStyles(() =>
+  createStyles({
+    fieldNationality: {
+      minWidth: 140,
+    },
+  })
+);
+// COMPONENTS FOR OPTIMIZATION
+const FieldGender = memo(({ value, onChange }) => {
+  const classes = useFieldGenderStyles();
+  return (
+    <FormControl
+      variant="outlined"
+      className={classes.fieldGender}
+      size="small"
+    >
+      <InputLabel id="gender">Gender</InputLabel>
+      <Select
+        name="gender"
+        labelId="gender"
+        value={value}
+        onChange={onChange}
+        label="Gender"
+      >
+        <MenuItem value="all">All</MenuItem>
+        <MenuItem value="male">Male</MenuItem>
+        <MenuItem value="female">Female</MenuItem>
+      </Select>
+    </FormControl>
+  );
+});
+const FieldNationality = memo((value, onChange) => {
+  const classes = useFieldNationalityStyles();
+  return (
+    <FormControl
+      variant="outlined"
+      className={classes.fieldNationality}
+      size="small"
+    >
+      <InputLabel id="nationality">Nationality</InputLabel>
+      <Select
+        name="nationality"
+        labelId="gender"
+        value={value}
+        onChange={onChange}
+        label="Nationality"
+      >
+        <MenuItem value="all">All</MenuItem>
+        {Object.entries(NATIONALITIES).map(([key, name]) => (
+          <MenuItem value={key} key={key}>
+            {name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
+});
+const FieldFullName = memo((value, onChange) => {
+  return (
+    <TextField
+      value={value}
+      name="fullname"
+      label="Fullname"
+      variant="outlined"
+      onChange={onChange}
+      size="small"
+    />
+  );
+});
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     fieldsContainer: {
@@ -20,89 +98,45 @@ const useStyles = makeStyles((theme) =>
         marginRight: theme.spacing(2),
       },
     },
-    fieldGender: {
-      minWidth: 100,
-    },
-    fieldNationality: {
-      minWidth: 140,
-    },
   })
 );
 
-export default function ContactsFilters({
-  filters,
-  updateFilter,
-  clearFilters,
-}) {
-  const classes = useStyles();
+export const ContactsFilters = memo(
+  ({ filters, updateFilter, clearFilters }) => {
+    const classes = useStyles();
+    // handlers
+    const handleChangeFilter = useCallback(
+      (e) => {
+        updateFilter(e.target.name, e.target.value);
+      },
+      [updateFilter]
+    );
 
-  // handlers
-  const handleChangeFilter = (e) => {
-    updateFilter(e.target.name, e.target.value);
-  };
-
-  return (
-    <Box display="flex" justifyContent="space-between">
-      <Box display="flex" className={classes.fieldsContainer}>
-        <TextField
-          value={filters.fullname}
-          name="fullname"
-          label="Fullname"
-          variant="outlined"
-          onChange={handleChangeFilter}
-          size="small"
-        />
-        <FormControl
-          variant="outlined"
-          className={classes.fieldGender}
-          size="small"
-        >
-          <InputLabel id="gender">Gender</InputLabel>
-          <Select
-            name="gender"
-            labelId="gender"
-            value={filters.gender}
+    return (
+      <Box display="flex" justifyContent="space-between">
+        <Box display="flex" className={classes.fieldsContainer}>
+          <FieldFullName
+            value={filters.fullname}
             onChange={handleChangeFilter}
-            label="Gender"
-          >
-            <MenuItem value="all">All</MenuItem>
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl
-          variant="outlined"
-          className={classes.fieldNationality}
-          size="small"
-        >
-          <InputLabel id="nationality">Nationality</InputLabel>
-          <Select
-            name="nationality"
-            labelId="gender"
+          />
+          <FieldGender value={filters.gender} onChange={handleChangeFilter} />
+          <FieldNationality
             value={filters.nationality}
             onChange={handleChangeFilter}
-            label="Nationality"
-          >
-            <MenuItem value="all">All</MenuItem>
-            {Object.entries(NATIONALITIES).map(([key, name]) => (
-              <MenuItem value={key} key={key}>
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+          />
+        </Box>
+        <Button
+          variant="outlined"
+          startIcon={<ClearIcon />}
+          size="small"
+          onClick={clearFilters}
+        >
+          Clear
+        </Button>
       </Box>
-      <Button
-        variant="outlined"
-        startIcon={<ClearIcon />}
-        size="small"
-        onClick={clearFilters}
-      >
-        Clear
-      </Button>
-    </Box>
-  );
-}
+    );
+  }
+);
 
 ContactsFilters.propTypes = {
   filters: PropTypes.object.isRequired,

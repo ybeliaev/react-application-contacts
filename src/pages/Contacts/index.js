@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { DATA_VIEW_MODE } from "../../constants/constants";
@@ -13,7 +13,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { ContactsTable } from "./ContactsTable";
 import { ToggleDataViewMode } from "./ToggleDataViewMode";
-import ContactsFilters from "../ContactsFilters";
+import { ContactsFilters } from "../ContactsFilters";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -61,21 +61,21 @@ export function Contacts() {
   const classes = useStyles();
 
   // handlers
-  const updateFilter = (name, value) => {
+  const updateFilter = useCallback((name, value) => {
     setFilters((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
+  }, []);
   // if filters.fullname="" - includes return TRUE
   const filteredContacts = contacts.data
     .filter((c) => filterByFullName(c.name, filters.fullname))
     .filter((c) => filterByGender(c.gender, filters.gender))
     .filter((c) => filterByNationality(c.nat, filters.nationality));
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setFilters(filterDefaultValue);
-  };
+  }, []);
 
   return (
     <Container className={classes.root}>
